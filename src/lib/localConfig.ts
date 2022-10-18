@@ -53,8 +53,11 @@ class LocalConfig {
         'node_modules',
         seedName
       )
+
       const seedPkgPath = path.join(seedPath, 'package.json')
+
       if (fs.existsSync(seedPkgPath)) {
+
         const pkg = require(seedPkgPath)
         setting.seedMap[seedName] = {
           name: seedName,
@@ -63,6 +66,18 @@ class LocalConfig {
         }
       }
     })
+
+    const localSeedMap = await this.seedHandle.get()
+
+    Object.keys(localSeedMap).forEach((seedName) => {
+      if (setting.seeds.indexOf(seedName) === -1) {
+        setting.seeds.push(seedName)
+      }
+
+      setting.seedMap[seedName] = localSeedMap[seedName]
+    })
+
+    return await this.handle.set(setting)
   }
 
   // 重置 config

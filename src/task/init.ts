@@ -1,4 +1,5 @@
 import * as chalk from 'chalk'
+import * as path from 'path'
 import * as inquirer from 'inquirer' 
 import { ActionSturct } from '../model/action'
 import { SeedDataStruct, SeedItemStruct } from '../model/seed'
@@ -8,6 +9,8 @@ import LogProcess from '../lib/process'
 import LocalConfig from '../lib/localConfig'
 import lang from '../lang'
 import { installAction } from './install'
+import { readFilePaths, copyFiles } from '../lib/utils'
+import { failSpinner, fs, infoSpinner, addSpinner, updateSpinner } from '../lib'
 
 const logProcess = new LogProcess()
 const localConfig = new LocalConfig()
@@ -25,7 +28,7 @@ export const initAction = async (_, cmder: ActionSturct) => {
   
   logProcess.finsh(lang.INIT.LIST_FINISHED)
 
-  const config: SeedDataStruct | Object = (await localConfig.get()) || {}
+  let config: SeedDataStruct | Object = (await localConfig.get()) || {}
 
   const installedSeeds = (config as SeedDataStruct).seeds || []
 
@@ -104,5 +107,101 @@ export const initAction = async (_, cmder: ActionSturct) => {
     await installAction([seedInfo.name]).catch((er) => {
       logProcess.finsh(er, 1)
     })
+
+    logProcess.finsh(lang.INIT.SEED_INSTALLED)
+
+    config = await localConfig.get()
   }
+
+  const iSeedPack = require((config as SeedDataStruct).seedMap[seedInfo.name].main)
+
+  // 启动前 hooks
+  if (iSeedPack?.hooks?.beforeStart) {
+    infoSpinner(lang.INIT.HOOKS_BEFORE_START_RUN)
+    await iSeedPack.hooks.beforeStart({
+      targetPath: targetPath
+    }).catch((err) => {
+      failSpinner(err)
+    })
+    infoSpinner(lang.INIT.HOOKS_BEFORE_START_FINISHED)
+  }
+
+  // 准备需要复制的文件
+  if (!iSeedPack.path) {
+    failSpinner(lang.INIT.SEED_COPY_PATH_UNDEFINED)
+    return
+  }
+
+  let fileMap = {}
+  const iSeedConfig = (config as SeedDataStruct).seedMap[iSeed]
+  const seedSourcePath = path.resolve(
+    path.dirname(iSeedConfig.main),
+    iSeedPack.path
+  )
+
+  infoSpinner(lang.INIT.SEED_COPY_MAP_PRINT)
+
+  if (!fs.existsSync(seedSourcePath)) {
+    failSpinner(lang.INIT.SEED_COPY_PATH_NOT_EXISTS)
+
+    return
+  }
+
+  let files: any = []
+
+  try {
+    files = await readFilePaths(seedSourcePath)
+  } catch (err) {
+    throw err    
+  }
+
+  files.forEach((iPath) => {
+    fileMap[iPath] = [
+      path.resolve(targetPath, path.relative(seedSourcePath, iPath))
+    ]
+  })
+
+  // 复制前 hooks
+  if (iSeedPack.hooks && iSeedPack.hooks.beforeCopy) {
+    infoSpinner(lang.INIT.HOOKS_BEFORE_COPY_RUN)
+
+    let rMap 
+
+    try {
+      rMap = await iSeedPack.hooks.beforeCopy({
+        fileMap,
+        targetPath,
+      })
+    } catch (er) {
+      throw er
+    }
+
+    if (typeof rMap === 'object') {
+      fileMap = rMap
+    }
+
+    infoSpinner(lang.INIT.HOOKS_BEFORE_START_FINISHED)
+  }
+
+  infoSpinner(lang.INIT.SEED_COPY_MAP_PRINT)
+
+  Object.keys(fileMap).forEach((iPath) => {
+    infoSpinner(`${chalk.yellow(iPath)} => ${chalk.green(fileMap[iPath].join(','))}`)
+  })
+
+  // 复制
+  let iLog
+  try {
+    iLog = await copyFiles(fileMap)
+  } catch (err) {
+    throw err
+  }
+
+  iLog.add.forEach((iPath) => {
+    addSpinner(iPath)
+  })
+
+  iLog.update.forEach((iPath) => {
+    updateSpinner(iPath)
+  })
 }

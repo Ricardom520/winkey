@@ -32,10 +32,22 @@ export const succeedSpiner = (text?: string) => {
 }
 
 export const failSpinner = (text?: string) => {
-  // spinner.fail(chalk.red(text))
-  console.log(text)
   spinner.stopAndPersist({
     symbol: '☠️',
     text: chalk.red(text)
+  })
+}
+
+export const addSpinner = (text?: string) => {
+  spinner.stopAndPersist({
+    symbol: '😏',
+    text: chalk.cyan(text)
+  })
+}
+
+export const updateSpinner = (text?: string) => {
+  spinner.stopAndPersist({
+    symbol: '😮',
+    text: chalk.dim(text)
   })
 }

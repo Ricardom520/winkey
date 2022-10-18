@@ -13,6 +13,7 @@ class LogProcess {
   private speedTime = 0
 
   start(txt?: string) {
+    this.speedTime = 0
     startSpinner(txt || '开始咯~')
   }
 

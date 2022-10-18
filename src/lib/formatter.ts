@@ -5,7 +5,8 @@ const WINKEY_SEED_SHORT_PREFIX = 'winkey-'
 const REG = {
   WINKEY_SEED_FULL_PREFIX: new RegExp(`^${WINKEY_SEED_FULL_PREFIX}`),
   WINKEY_SEED_SHORT_PREFIX: new RegExp(`^${WINKEY_SEED_FULL_PREFIX}`),
-  SEED_FULL_PREFIX: new RegExp(`^${SEED_FULL_PREFIX}`)
+  SEED_FULL_PREFIX: new RegExp(`^${SEED_FULL_PREFIX}`),
+  NODE_HANDLE: /(node\.exe|node)$/
 }
 
 export const seedFull2Short = (name) => {
