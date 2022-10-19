@@ -6,7 +6,7 @@ export const spinner = ora()
 export const infoSpinner = (text?: string) => {
   spinner.stopAndPersist({
     symbol: '🚘',
-    text: text
+    text: chalk.cyan(text)
   })
 }
 
@@ -20,10 +20,6 @@ export const startSpinner = (text?: string) => {
   })
 }
 
-export const processSpinner = (text?: string) => {
-  
-}
-
 export const succeedSpiner = (text?: string) => {
   spinner.stopAndPersist({
     symbol: '🎉',
@@ -34,14 +30,14 @@ export const succeedSpiner = (text?: string) => {
 export const failSpinner = (text?: string) => {
   spinner.stopAndPersist({
     symbol: '☠️',
-    text: chalk.red(text)
+    text: chalk.bgRed(text)
   })
 }
 
 export const addSpinner = (text?: string) => {
   spinner.stopAndPersist({
     symbol: '😏',
-    text: chalk.cyan(text)
+    text: chalk.greenBright(text)
   })
 }
 
@@ -49,5 +45,26 @@ export const updateSpinner = (text?: string) => {
   spinner.stopAndPersist({
     symbol: '😮',
     text: chalk.dim(text)
+  })
+}
+
+export const warnSpinner = (text?: string) => {
+  spinner.stopAndPersist({
+    symbol: '😡',
+    text: chalk.yellow(text)
+  })
+}
+
+export const cmdSpinner = (text?: string) => {
+  spinner.stopAndPersist({
+    symbol: '👻',
+    text: chalk.white(text)
+  })
+}
+
+export const waitSpinner = (text?: string) => {
+  spinner.stopAndPersist({
+    symbol: '🥱',
+    text: text
   })
 }

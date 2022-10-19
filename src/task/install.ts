@@ -37,7 +37,7 @@ export const installAction = async (names, cmder?: ActionSturct) => {
   }
 
   await runSpawn(
-    `npm install ${names.join(' ')}@0.0.7-alpha.0 --save`,
+    `npm install ${names.join(' ')}@0.0.24-alpha.0 --save`,
     CONFIG_PLUGIN_PATH,
     (msg) => {
       infoSpinner(msg.toString())
@@ -45,6 +45,7 @@ export const installAction = async (names, cmder?: ActionSturct) => {
   )
   .catch((er) => {
     throw er
+    return
   })
 
   await localConfig.updateSeedInfo().catch((er) => {

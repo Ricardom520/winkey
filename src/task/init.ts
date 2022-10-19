@@ -11,6 +11,7 @@ import lang from '../lang'
 import { installAction } from './install'
 import { readFilePaths, copyFiles } from '../lib/utils'
 import { failSpinner, fs, infoSpinner, addSpinner, updateSpinner } from '../lib'
+import { logger } from '../lib/logger'
 
 const logProcess = new LogProcess()
 const localConfig = new LocalConfig()
@@ -21,7 +22,7 @@ export const initAction = async (_, cmder: ActionSturct) => {
   let targetPath = process.cwd()
 
   if (cmder.args[0]) {
-    targetPath = cmder.args[0]
+    targetPath = path.resolve(cmder.args[0])
   }
 
   const seeds = await listSeed()
@@ -204,4 +205,16 @@ export const initAction = async (_, cmder: ActionSturct) => {
   iLog.update.forEach((iPath) => {
     updateSpinner(iPath)
   })
+
+  // 复制后hook
+  if (iSeedPack.hooks && iSeedPack.hooks.afterCopy) {
+    infoSpinner(lang.INIT.HOOKS_AFTER_COPY_RUN)
+    console.log('targetPath:', targetPath)
+
+    await iSeedPack.hooks.afterCopy({
+      fileMap,
+      targetPath,
+      logger
+    })
+  }
 }
