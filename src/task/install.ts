@@ -37,7 +37,7 @@ export const installAction = async (names, cmder?: ActionSturct) => {
   }
 
   await runSpawn(
-    `npm install ${names.join(' ')}@0.0.24-alpha.0 --save`,
+    `npm install ${names.join(' ')}@0.0.25-alpha.0 --save`,
     CONFIG_PLUGIN_PATH,
     (msg) => {
       infoSpinner(msg.toString())
