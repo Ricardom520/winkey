@@ -1,10 +1,10 @@
 import * as path from 'path'
 import * as fs from 'fs'
+import { runSpawn } from 'winkey-os'
 import { ActionSturct } from '../model/action'
 import { mkdirSync } from '../lib/utils'
 import { IS_WINDOWS } from '../lib/consts'
-import { runSpawn } from '../lib/os'
-import { infoSpinner } from '../lib/spinner'
+import { logger } from '../lib/logger'
 import LocalConfig from '../lib/localConfig'
 import LogProcess from '../lib/process'
 import lang from '../lang'
@@ -26,8 +26,14 @@ const reset = async () => {
 export const installAction = async (names, cmder?: ActionSturct) => {
   logProcess.start(lang.INSTALL.START)
   
-  if (!fs.existsSync(CONFIG_PLUGIN_PATH)) {
-    await mkdirSync(CONFIG_PLUGIN_PATH).catch((er) => {
+  let targetPath = CONFIG_PLUGIN_PATH
+
+  if (cmder.args && cmder.args[0]) {
+    targetPath = path.resolve(targetPath, cmder.args[0])
+  }
+
+  if (!fs.existsSync(targetPath)) {
+    await mkdirSync(targetPath).catch((er) => {
       throw er
     })
 
@@ -36,14 +42,11 @@ export const installAction = async (names, cmder?: ActionSturct) => {
     })
   }
 
-  await runSpawn(
-    `npm install ${names.join(' ')}@0.0.25-alpha.0 --save`,
-    CONFIG_PLUGIN_PATH,
-    (msg) => {
-      infoSpinner(msg.toString())
-    }
-  )
-  .catch((er) => {
+  await runSpawn({
+    cmd: `npm install ${names.join(' ')}@0.0.34-alpha.0 --save`,
+    targetPath: targetPath,
+    logger: logger
+  }).catch((er) => {
     throw er
     return
   })

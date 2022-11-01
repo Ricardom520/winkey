@@ -26,4 +26,15 @@ export default {
     START: 'install 运行开始',
     FINISHED: 'install 运行完成'
   },
+  SEEDS: {
+    START: '开始查找seeds包',
+    LOADING: '查找中，请稍候',
+    END: '查找结束'
+  },
+  WINKEY: {
+    DEFAULT: 'winkey 脚手架命令行展示:',
+    BUILD: 'winkey build || winkey build xxx (项目所在位置) 打包项目',
+    DEV: 'winkey dev || winkey dev xxx (项目所在位置) 本地运行项目',
+    LISTSEEDS: 'winkey list -s || winkey list --seeds 查看所有seeds包'
+  }
 }

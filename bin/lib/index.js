@@ -14,11 +14,13 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.execa = exports.fs = exports.chalk = void 0;
+exports.axios = exports.execa = exports.fs = exports.chalk = void 0;
 /**exports*/
 __exportStar(require("./consts"), exports);
 __exportStar(require("./spinner"), exports);
 __exportStar(require("./logger"), exports);
+__exportStar(require("./process"), exports);
 exports.chalk = require('chalk');
 exports.fs = require('fs-extra');
 exports.execa = require('execa');
+exports.axios = require('axios');

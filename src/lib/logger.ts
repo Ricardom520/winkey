@@ -7,7 +7,8 @@ import {
   updateSpinner, 
   warnSpinner, 
   cmdSpinner,
-  waitSpinner
+  waitSpinner,
+  tipSpinner
 } from '.'
 
 export enum LogType {
@@ -18,7 +19,8 @@ export enum LogType {
   Update = 'update',
   Cmd = 'cmd',
   Success = 'success',
-  Wait = 'wait'
+  Wait = 'wait',
+  Tip = 'tip'
 }
 
 export const warn = (text: string) => {
@@ -53,6 +55,10 @@ export const wait = (text: string) => {
   waitSpinner(text)
 }
 
+export const tip = (text: string) => {
+  tipSpinner(text)
+}
+
 export const logger = (type: LogType, text: string) => {
   switch(type) {
     case LogType.Add:
@@ -78,6 +84,9 @@ export const logger = (type: LogType, text: string) => {
       break
     case LogType.Wait:
       wait(text)
+      break
+    case LogType.Tip:
+      tip(text)
       break
     default:
       info(text)

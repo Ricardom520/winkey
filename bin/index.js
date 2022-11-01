@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * 教授架入口文件
+ * description: 教架入口文件
+ * author: Ricardom
  */
 const command_1 = require("./command");
 const path = require("path");

@@ -30,7 +30,7 @@ export const succeedSpiner = (text?: string) => {
 export const failSpinner = (text?: string) => {
   spinner.stopAndPersist({
     symbol: '☠️',
-    text: chalk.bgRed(text)
+    text: chalk.red(text)
   })
 }
 
@@ -66,5 +66,12 @@ export const waitSpinner = (text?: string) => {
   spinner.stopAndPersist({
     symbol: '🥱',
     text: text
+  })
+}
+
+export const tipSpinner = (text?: string) => {
+  spinner.stopAndPersist({
+    symbol: '🐌',
+    text: text || '这是提示'
   })
 }

@@ -1,17 +1,20 @@
 {
-  "name": "winkey",
+  "name": "winkey-cli",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "homepage": "https://github.com/Ricardom520/winkey#readme",
   "scripts": {
     "clear": "rimraf build",
     "build": "npm run clear && tsc",
+    "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
+    "winkey": "./bin",
     "winkey-local": "./bin-local.js"
   },
-  "author": "Ricardom",
+  "author": "Ricardom520 <1781218530@qq.com>",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.1.2",
@@ -21,7 +24,8 @@
     "fs-extra": "10.1.0",
     "inquirer": "8.2.0",
     "ora": "5.4.1",
-    "pacote": "14.0.0"
+    "pacote": "14.0.0",
+    "winkey-os": "^1.0.5"
   },
   "devDependencies": {
     "@types/node": "^18.8.4",

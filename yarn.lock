@@ -1458,6 +1458,11 @@ wide-align@^1.1.5:
   dependencies:
     string-width "^1.0.2 || 2 || 3 || 4"
 
+winkey-os@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/winkey-os/-/winkey-os-1.0.5.tgz#74ea7a9825b4bb7f7493b806d0ee9de16946c3d4"
+  integrity sha512-S0jvIbvHrBV3jj5su/azp2uEZr3ki7mIdkFXUgDA06mfzIlNjiSOozkumMlXHs5N9ydIWv1P2fbJhU+uAm3ewA==
+
 wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"

@@ -209,12 +209,13 @@ export const initAction = async (_, cmder: ActionSturct) => {
   // 复制后hook
   if (iSeedPack.hooks && iSeedPack.hooks.afterCopy) {
     infoSpinner(lang.INIT.HOOKS_AFTER_COPY_RUN)
-    console.log('targetPath:', targetPath)
 
     await iSeedPack.hooks.afterCopy({
       fileMap,
       targetPath,
       logger
     })
+
+    infoSpinner(lang.INIT.HOOKS_AFTER_COPY_FINISHED)
   }
 }
