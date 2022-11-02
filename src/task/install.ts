@@ -28,7 +28,7 @@ export const installAction = async (names, cmder?: ActionSturct) => {
   
   let targetPath = CONFIG_PLUGIN_PATH
 
-  if (cmder.args && cmder.args[0]) {
+  if (cmder && cmder.args && cmder.args[0]) {
     targetPath = path.resolve(targetPath, cmder.args[0])
   }
 
@@ -43,7 +43,7 @@ export const installAction = async (names, cmder?: ActionSturct) => {
   }
 
   await runSpawn({
-    cmd: `npm install ${names.join(' ')}@0.0.34-alpha.0 --save`,
+    cmd: `npm install ${names.join(' ')} --save`,
     targetPath: targetPath,
     logger: logger
   }).catch((er) => {

@@ -1,75 +1,75 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.tipSpinner = exports.waitSpinner = exports.cmdSpinner = exports.warnSpinner = exports.updateSpinner = exports.addSpinner = exports.failSpinner = exports.succeedSpiner = exports.startSpinner = exports.infoSpinner = exports.spinner = void 0;
-const ora = require("ora");
-const chalk = require("chalk");
+var ora = require("ora");
+var chalk = require("chalk");
 exports.spinner = ora();
-const infoSpinner = (text) => {
+var infoSpinner = function (text) {
     exports.spinner.stopAndPersist({
         symbol: '🚘',
         text: chalk.cyan(text)
     });
 };
 exports.infoSpinner = infoSpinner;
-const startSpinner = (text) => {
-    const msg = `${text}...\n`;
+var startSpinner = function (text) {
+    var msg = "".concat(text, "...\n");
     exports.spinner.start(msg);
     exports.spinner.stopAndPersist({
         symbol: '✨',
-        text: msg,
+        text: msg
     });
 };
 exports.startSpinner = startSpinner;
-const succeedSpiner = (text) => {
+var succeedSpiner = function (text) {
     exports.spinner.stopAndPersist({
         symbol: '🎉',
-        text: `${text}\n`
+        text: "".concat(text, "\n")
     });
 };
 exports.succeedSpiner = succeedSpiner;
-const failSpinner = (text) => {
+var failSpinner = function (text) {
     exports.spinner.stopAndPersist({
         symbol: '☠️',
         text: chalk.red(text)
     });
 };
 exports.failSpinner = failSpinner;
-const addSpinner = (text) => {
+var addSpinner = function (text) {
     exports.spinner.stopAndPersist({
         symbol: '😏',
         text: chalk.greenBright(text)
     });
 };
 exports.addSpinner = addSpinner;
-const updateSpinner = (text) => {
+var updateSpinner = function (text) {
     exports.spinner.stopAndPersist({
         symbol: '😮',
         text: chalk.dim(text)
     });
 };
 exports.updateSpinner = updateSpinner;
-const warnSpinner = (text) => {
+var warnSpinner = function (text) {
     exports.spinner.stopAndPersist({
         symbol: '😡',
         text: chalk.yellow(text)
     });
 };
 exports.warnSpinner = warnSpinner;
-const cmdSpinner = (text) => {
+var cmdSpinner = function (text) {
     exports.spinner.stopAndPersist({
         symbol: '👻',
         text: chalk.white(text)
     });
 };
 exports.cmdSpinner = cmdSpinner;
-const waitSpinner = (text) => {
+var waitSpinner = function (text) {
     exports.spinner.stopAndPersist({
         symbol: '🥱',
         text: text
     });
 };
 exports.waitSpinner = waitSpinner;
-const tipSpinner = (text) => {
+var tipSpinner = function (text) {
     exports.spinner.stopAndPersist({
         symbol: '🐌',
         text: text || '这是提示'

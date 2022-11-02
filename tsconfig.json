@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs",
+    "target": "es3",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -13,7 +12,7 @@
     "importHelpers": false,
     "strictNullChecks": false,
     "allowUnreachableCode": true,
-    "lib": ["es6", "ES2017.SharedMemory", "DOM"],
+    "lib": ["es2015"],
     "typeRoots": ["./node_modules/@types"],
     "outDir": "./bin", // 重定向输出目录
     "rootDir": "./src" // 仅用来控制输出的目录结构

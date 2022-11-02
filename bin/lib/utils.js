@@ -1,12 +1,12 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.copyFiles = exports.readFilePaths = exports.mkdirSync = exports.makeAwait = exports.makeAsync = exports.markTry = void 0;
-const path = require("path");
-const fs = require("fs");
-const spinner_1 = require("./spinner");
-const typeFunction = (obj) => {
-    let type;
-    const toString = Object.prototype.toString;
+var path = require("path");
+var fs = require("fs");
+var spinner_1 = require("./spinner");
+var typeFunction = function (obj) {
+    var type;
+    var toString = Object.prototype.toString;
     if (obj === null) {
         type = String(obj);
     }
@@ -16,8 +16,8 @@ const typeFunction = (obj) => {
     }
     return type;
 };
-const isIgnoreFunction = (iPath, filter) => {
-    let ignore = false;
+var isIgnoreFunction = function (iPath, filter) {
+    var ignore = false;
     if (filter) {
         if (typeFunction(filter) === 'function') {
             ignore = !filter(iPath);
@@ -28,7 +28,7 @@ const isIgnoreFunction = (iPath, filter) => {
     }
     return ignore;
 };
-const markTry = (fn) => {
+var markTry = function (fn) {
     try {
         fn();
     }
@@ -37,28 +37,32 @@ const markTry = (fn) => {
     }
 };
 exports.markTry = markTry;
-const makeAsync = (fn, isMocha) => {
+var makeAsync = function (fn, isMocha) {
     return function (next) {
         if (isMocha) {
             this.timeout(0);
         }
-        fn().then((...argu) => {
-            if (typeof next === 'function') {
-                next(...argu);
+        fn().then(function () {
+            var argu = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                argu[_i] = arguments[_i];
             }
-        }).catch((er) => {
+            if (typeof next === 'function') {
+                next.apply(void 0, argu);
+            }
+        })["catch"](function (er) {
             throw er;
         });
     };
 };
 exports.makeAsync = makeAsync;
-const makeAwait = (fn) => {
+var makeAwait = function (fn) {
     return new Promise(fn);
 };
 exports.makeAwait = makeAwait;
-const mkdirSync = (toFile) => {
-    const tPath = toFile.replace(/[/\\]$/, '');
-    const r = [];
+var mkdirSync = function (toFile) {
+    var tPath = toFile.replace(/[/\\]$/, '');
+    var r = [];
     (function deep(iPath) {
         if (fs.existsSync(iPath) || /[/\\]$/.test(iPath)) {
             return;
@@ -72,42 +76,42 @@ const mkdirSync = (toFile) => {
     return Promise.resolve(r);
 };
 exports.mkdirSync = mkdirSync;
-const readFilePaths = (fromPath, filter, reverse) => {
-    let targetPaths;
+var readFilePaths = function (fromPath, filter, reverse) {
+    var targetPaths;
     if (typeFunction(fromPath) === 'array') {
         targetPaths = fromPath;
     }
     else {
         targetPaths = [fromPath];
     }
-    const readPath = (iPath) => {
-        let r = [];
+    var readPath = function (iPath) {
+        var r = [];
         if (!fs.existsSync(iPath)) {
             return Promise.resolve(r);
         }
-        const runner = (next, reject) => {
-            const stat = fs.statSync(iPath);
+        var runner = function (next, reject) {
+            var stat = fs.statSync(iPath);
             if (stat.isDirectory()) {
-                const rPaths = fs.readdirSync(iPath).map((name) => path.join(iPath, name));
-                let padding = rPaths.length;
-                const paddingCheck = () => {
-                    if (!padding) {
+                var rPaths = fs.readdirSync(iPath).map(function (name) { return path.join(iPath, name); });
+                var padding_1 = rPaths.length;
+                var paddingCheck_1 = function () {
+                    if (!padding_1) {
                         next(r);
                     }
                 };
-                rPaths.forEach((iiPath) => {
-                    readPath(iiPath).then((data) => {
+                rPaths.forEach(function (iiPath) {
+                    readPath(iiPath).then(function (data) {
                         r = r.concat(data);
-                        padding--;
-                        paddingCheck();
-                    }).catch((er) => {
+                        padding_1--;
+                        paddingCheck_1();
+                    })["catch"](function (er) {
                         reject(er);
                     });
                 });
-                paddingCheck();
+                paddingCheck_1();
             }
             else {
-                let isIgnore = isIgnoreFunction(iPath, filter);
+                var isIgnore = isIgnoreFunction(iPath, filter);
                 if (reverse) {
                     isIgnore = !isIgnore;
                 }
@@ -119,20 +123,20 @@ const readFilePaths = (fromPath, filter, reverse) => {
         };
         return new Promise(runner);
     };
-    const runner = (next, reject) => {
-        let r = [];
-        let padding = targetPaths.length;
-        const paddingCheck = () => {
+    var runner = function (next, reject) {
+        var r = [];
+        var padding = targetPaths.length;
+        var paddingCheck = function () {
             if (!padding) {
                 next(r);
             }
         };
-        targetPaths.forEach((iPath) => {
-            readPath(iPath).then((data) => {
+        targetPaths.forEach(function (iPath) {
+            readPath(iPath).then(function (data) {
                 r = r.concat(data);
                 padding--;
                 paddingCheck();
-            }).catch((er) => {
+            })["catch"](function (er) {
                 reject(er);
             });
         });
@@ -141,9 +145,9 @@ const readFilePaths = (fromPath, filter, reverse) => {
     return new Promise(runner);
 };
 exports.readFilePaths = readFilePaths;
-const copyFiles = (fromPath, toPath, filter) => {
-    let copyMap = {};
-    let iFilter;
+var copyFiles = function (fromPath, toPath, filter) {
+    var copyMap = {};
+    var iFilter;
     if (typeof fromPath === 'object') {
         copyMap = Object.assign(copyMap, fromPath);
         iFilter = toPath;
@@ -158,7 +162,7 @@ const copyFiles = (fromPath, toPath, filter) => {
         iFilter = filter;
     }
     // 数据格式化 转成 {from: [toFile]} 格式
-    Object.keys(copyMap).forEach((key) => {
+    Object.keys(copyMap).forEach(function (key) {
         if (!fs.existsSync(key)) {
             delete copyMap[key];
             return;
@@ -167,8 +171,8 @@ const copyFiles = (fromPath, toPath, filter) => {
             copyMap[key] = [copyMap[key]];
         }
     });
-    const copyFile = (fromFile, toFile) => {
-        const r = {
+    var copyFile = function (fromFile, toFile) {
+        var r = {
             add: [],
             update: []
         };
@@ -183,21 +187,21 @@ const copyFiles = (fromPath, toPath, filter) => {
             (0, exports.mkdirSync)(path.dirname(toFile));
             r.add.push(toFile);
         }
-        const runner = (next, reject) => {
-            const rStream = fs.createReadStream(fromFile);
-            const wStream = fs.createWriteStream(toFile);
+        var runner = function (next, reject) {
+            var rStream = fs.createReadStream(fromFile);
+            var wStream = fs.createWriteStream(toFile);
             rStream.pipe(wStream);
-            wStream.on('finish', () => {
+            wStream.on('finish', function () {
                 next(r);
             });
-            wStream.on('error', (er) => {
+            wStream.on('error', function (er) {
                 reject(er);
             });
         };
         return new Promise(runner);
     };
-    const copyPath = (fromPath, toPath) => {
-        const r = {
+    var copyPath = function (fromPath, toPath) {
+        var r = {
             add: [],
             update: []
         };
@@ -207,34 +211,34 @@ const copyFiles = (fromPath, toPath, filter) => {
         if (!fs.existsSync(toPath)) {
             (0, exports.mkdirSync)(toPath);
         }
-        const runner = (next, reject) => {
-            const dirMap = {};
-            const dirs = fs.readdirSync(fromPath).map((name) => {
-                const iPath = path.join(fromPath, name);
+        var runner = function (next, reject) {
+            var dirMap = {};
+            var dirs = fs.readdirSync(fromPath).map(function (name) {
+                var iPath = path.join(fromPath, name);
                 dirMap[iPath] = path.join(toPath, name);
                 return iPath;
             });
-            let padding = dirs.length;
-            const paddingCheck = () => {
+            var padding = dirs.length;
+            var paddingCheck = function () {
                 if (!padding) {
                     next(r);
                 }
             };
-            dirs.forEach((iPath) => {
-                const stat = fs.statSync(iPath);
-                let handle = null;
+            dirs.forEach(function (iPath) {
+                var stat = fs.statSync(iPath);
+                var handle = null;
                 if (stat.isDirectory()) {
                     handle = copyPath;
                 }
                 else {
                     handle = copyFile;
                 }
-                handle(iPath, dirMap[iPath]).then((data) => {
+                handle(iPath, dirMap[iPath]).then(function (data) {
                     r.update = r.update.concat(data.update);
                     r.add = r.add.concat(data.add);
                     padding--;
                     paddingCheck();
-                }).catch((er) => {
+                })["catch"](function (er) {
                     reject(er);
                 });
             });
@@ -242,38 +246,38 @@ const copyFiles = (fromPath, toPath, filter) => {
         };
         return new Promise(runner);
     };
-    const runner = (next, reject) => {
-        let r = {
+    var runner = function (next, reject) {
+        var r = {
             add: [],
             update: []
         };
-        let padding = Object.keys(copyMap).length;
-        const paddingCheck = function () {
+        var padding = Object.keys(copyMap).length;
+        var paddingCheck = function () {
             if (!padding) {
                 next(r);
             }
         };
-        Object.keys(copyMap).forEach((key) => {
-            const fromStat = fs.statSync(key);
-            let handle = null;
+        Object.keys(copyMap).forEach(function (key) {
+            var fromStat = fs.statSync(key);
+            var handle = null;
             if (fromStat.isDirectory()) { // 文件夹
                 handle = copyPath;
             }
             else { //文件
                 handle = copyFile;
             }
-            const arr = [];
-            copyMap[key].forEach((toFile) => {
+            var arr = [];
+            copyMap[key].forEach(function (toFile) {
                 arr.push(handle(key, toFile));
             });
-            Promise.all(arr).then((values) => {
-                values.map((data) => {
+            Promise.all(arr).then(function (values) {
+                values.map(function (data) {
                     r.add = r.add.concat(data.add);
                     r.update = r.update.concat(data.update);
                 });
                 padding--;
                 paddingCheck();
-            }).catch((er) => {
+            })["catch"](function (er) {
                 reject(er);
             });
         });

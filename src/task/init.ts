@@ -21,7 +21,7 @@ export const initAction = async (_, cmder: ActionSturct) => {
   logProcess.wait(lang.INIT.LIST_START)
   let targetPath = process.cwd()
 
-  if (cmder.args[0]) {
+  if (cmder.args && cmder.args[0]) {
     targetPath = path.resolve(cmder.args[0])
   }
 

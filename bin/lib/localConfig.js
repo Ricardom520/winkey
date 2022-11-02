@@ -1,10 +1,46 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const path = require("path");
-const fs = require("fs");
-const localStorage_1 = require("./localStorage");
-const pkg = require('../../package.json');
-const DEFAULT_PKG_CONFIG = {
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+exports.__esModule = true;
+var path = require("path");
+var fs = require("fs");
+var localStorage_1 = require("./localStorage");
+var pkg = require('../../package.json');
+var DEFAULT_PKG_CONFIG = {
     name: 'init-project-plugins',
     version: pkg.version,
     description: 'plugin manage',
@@ -14,54 +50,91 @@ const DEFAULT_PKG_CONFIG = {
     dependencies: {},
     devDependencies: {}
 };
-const DEFAULT_CONFIG = {
+var DEFAULT_CONFIG = {
     seeds: [],
     seedMap: {}
 };
-const DEFAULT_LOCAL_SEED_CONFIG = {};
-class LocalConfig {
-    constructor() {
-        this.handle = new localStorage_1.default('config', DEFAULT_CONFIG);
-        this.pkgHandle = new localStorage_1.default('plugins/package', DEFAULT_PKG_CONFIG);
-        this.seedHandle = new localStorage_1.default('local-seed.config', DEFAULT_LOCAL_SEED_CONFIG);
+var DEFAULT_LOCAL_SEED_CONFIG = {};
+var LocalConfig = /** @class */ (function () {
+    function LocalConfig() {
+        this.handle = new localStorage_1["default"]('config', DEFAULT_CONFIG);
+        this.pkgHandle = new localStorage_1["default"]('plugins/package', DEFAULT_PKG_CONFIG);
+        this.seedHandle = new localStorage_1["default"]('local-seed.config', DEFAULT_LOCAL_SEED_CONFIG);
     }
-    async get() {
-        return await this.handle.get();
-    }
-    async updateSeedInfo() {
-        // update config
-        const setting = await this.handle.get();
-        const pluginPkg = await this.pkgHandle.get();
-        setting.seeds = Object.keys(pluginPkg.dependencies);
-        setting.seedMap = {};
-        setting.seeds.forEach((seedName) => {
-            const seedPath = path.join(path.dirname(this.pkgHandle.savePath), 'node_modules', seedName);
-            const seedPkgPath = path.join(seedPath, 'package.json');
-            if (fs.existsSync(seedPkgPath)) {
-                const pkg = require(seedPkgPath);
-                setting.seedMap[seedName] = {
-                    name: seedName,
-                    version: pkg.version,
-                    main: path.resolve(seedPath, pkg.main)
-                };
-            }
+    LocalConfig.prototype.get = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.handle.get()];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
         });
-        const localSeedMap = await this.seedHandle.get();
-        Object.keys(localSeedMap).forEach((seedName) => {
-            if (setting.seeds.indexOf(seedName) === -1) {
-                setting.seeds.push(seedName);
-            }
-            setting.seedMap[seedName] = localSeedMap[seedName];
+    };
+    LocalConfig.prototype.updateSeedInfo = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var setting, pluginPkg, localSeedMap;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.handle.get()];
+                    case 1:
+                        setting = _a.sent();
+                        return [4 /*yield*/, this.pkgHandle.get()];
+                    case 2:
+                        pluginPkg = _a.sent();
+                        setting.seeds = Object.keys(pluginPkg.dependencies);
+                        setting.seedMap = {};
+                        setting.seeds.forEach(function (seedName) {
+                            var seedPath = path.join(path.dirname(_this.pkgHandle.savePath), 'node_modules', seedName);
+                            var seedPkgPath = path.join(seedPath, 'package.json');
+                            if (fs.existsSync(seedPkgPath)) {
+                                var pkg_1 = require(seedPkgPath);
+                                setting.seedMap[seedName] = {
+                                    name: seedName,
+                                    version: pkg_1.version,
+                                    main: path.resolve(seedPath, pkg_1.main)
+                                };
+                            }
+                        });
+                        return [4 /*yield*/, this.seedHandle.get()];
+                    case 3:
+                        localSeedMap = _a.sent();
+                        Object.keys(localSeedMap).forEach(function (seedName) {
+                            if (setting.seeds.indexOf(seedName) === -1) {
+                                setting.seeds.push(seedName);
+                            }
+                            setting.seedMap[seedName] = localSeedMap[seedName];
+                        });
+                        return [4 /*yield*/, this.handle.set(setting)];
+                    case 4: return [2 /*return*/, _a.sent()];
+                }
+            });
         });
-        return await this.handle.set(setting);
-    }
+    };
     // 重置 config
-    async reset() {
-        await this.handle.set(DEFAULT_CONFIG);
-        await this.pkgHandle.set(DEFAULT_PKG_CONFIG);
-        await this.seedHandle.set(DEFAULT_LOCAL_SEED_CONFIG);
-        await this.updateSeedInfo();
-        return await this.get();
-    }
-}
-exports.default = LocalConfig;
+    LocalConfig.prototype.reset = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.handle.set(DEFAULT_CONFIG)];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.pkgHandle.set(DEFAULT_PKG_CONFIG)];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, this.seedHandle.set(DEFAULT_LOCAL_SEED_CONFIG)];
+                    case 3:
+                        _a.sent();
+                        return [4 /*yield*/, this.updateSeedInfo()];
+                    case 4:
+                        _a.sent();
+                        return [4 /*yield*/, this.get()];
+                    case 5: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    return LocalConfig;
+}());
+exports["default"] = LocalConfig;

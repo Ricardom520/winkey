@@ -1,6 +1,6 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
+exports.__esModule = true;
+exports["default"] = {
     INIT: {
         LIST_START: '正在拉取可运行 seed 包',
         LIST_FINISHED: '拉取可运行 seed 包 完成',

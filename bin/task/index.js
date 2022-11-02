@@ -1,10 +1,10 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const init_1 = require("./init");
-const build_1 = require("./build");
-const list_1 = require("./list");
-const dev_1 = require("./dev");
-exports.default = {
+exports.__esModule = true;
+var init_1 = require("./init");
+var build_1 = require("./build");
+var list_1 = require("./list");
+var dev_1 = require("./dev");
+exports["default"] = {
     initAction: init_1.initAction,
     buildAction: build_1.buildAction,
     listAction: list_1.listAction,

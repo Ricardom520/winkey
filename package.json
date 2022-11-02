@@ -1,19 +1,22 @@
 {
   "name": "winkey-cli",
-  "version": "1.0.0",
+  "version": "1.0.9",
   "description": "",
-  "main": "index.js",
+  "main": "./bin/index.js",
   "homepage": "https://github.com/Ricardom520/winkey#readme",
   "scripts": {
     "clear": "rimraf build",
-    "build": "npm run clear && tsc",
+    "build": "npm run clear && tsc --build ./tsconfig.json",
     "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "winkey": "./bin",
-    "winkey-local": "./bin-local.js"
+    "winkey": "./bin.js"
   },
+  "files": [
+    "bin",
+    "bin.js"
+  ],
   "author": "Ricardom520 <1781218530@qq.com>",
   "license": "ISC",
   "dependencies": {
@@ -24,7 +27,6 @@
     "fs-extra": "10.1.0",
     "inquirer": "8.2.0",
     "ora": "5.4.1",
-    "pacote": "14.0.0",
     "winkey-os": "^1.0.5"
   },
   "devDependencies": {
