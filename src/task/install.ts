@@ -43,7 +43,7 @@ export const installAction = async (names, cmder?: ActionSturct) => {
   }
 
   await runSpawn({
-    cmd: `npm install ${names.join(' ')}@0.0.36-alpha.0 --save`,
+    cmd: `npm install ${names.join(' ')} --save`,
     targetPath: targetPath,
     logger: logger
   }).catch((er) => {
