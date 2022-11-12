@@ -86,7 +86,7 @@ var installAction = function (names, cmder) { return __awaiter(void 0, void 0, v
                 _a.sent();
                 _a.label = 3;
             case 3: return [4 /*yield*/, (0, winkey_os_1.runSpawn)({
-                    cmd: "npm install ".concat(names.join(' '), " --save"),
+                    cmd: "npm install ".concat(names.join(' '), "@0.0.40-alpha.0 --save"),
                     targetPath: targetPath,
                     logger: logger_1.logger
                 })["catch"](function (er) {

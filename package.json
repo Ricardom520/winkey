@@ -1,6 +1,6 @@
 {
   "name": "winkey-cli",
-  "version": "1.0.10",
+  "version": "1.0.15",
   "description": "",
   "main": "./bin/index.js",
   "homepage": "https://github.com/Ricardom520/winkey#readme",

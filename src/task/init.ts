@@ -113,7 +113,7 @@ export const initAction = async (_, cmder: ActionSturct) => {
 
     config = await localConfig.get()
   }
-
+  
   const iSeedPack = require((config as SeedDataStruct).seedMap[seedInfo.name].main)
 
   // 启动前 hooks
