@@ -66,7 +66,7 @@ function searchWinkeyNpm(key) {
     });
 }
 /** 返回Seed包 */
-function listSeed() {
+function listSeed(obj) {
     return __awaiter(this, void 0, void 0, function () {
         var winkeySeeds, res, er_1;
         return __generator(this, function (_a) {
@@ -86,7 +86,15 @@ function listSeed() {
                         winkeySeeds = ['winkey-init-project-seed-react'];
                     }
                     else {
-                        winkeySeeds = res.map(function (item) { return item.name; });
+                        if (obj === null || obj === void 0 ? void 0 : obj.map) {
+                            winkeySeeds = {};
+                            res.forEach(function (item) {
+                                winkeySeeds[item.name] = item;
+                            });
+                        }
+                        else {
+                            winkeySeeds = res.map(function (item) { return item.name; });
+                        }
                     }
                     return [2 /*return*/, winkeySeeds];
                 case 3:

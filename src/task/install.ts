@@ -23,13 +23,21 @@ const reset = async () => {
   })
 }
 
-export const installAction = async (names, cmder?: ActionSturct) => {
+export const installAction = async (names: string[], cmder?: ActionSturct) => {
   logProcess.start(lang.INSTALL.START)
   
   let targetPath = CONFIG_PLUGIN_PATH
 
   if (cmder && cmder.args && cmder.args[0]) {
-    targetPath = path.resolve(targetPath, cmder.args[0])
+    const res: string[] = cmder.args
+
+    names = []
+
+    res.forEach(item => {
+      if (!names.includes(item)) {
+        names.push(item)
+      }
+    })
   }
 
   if (!fs.existsSync(targetPath)) {
@@ -43,7 +51,7 @@ export const installAction = async (names, cmder?: ActionSturct) => {
   }
 
   await runSpawn({
-    cmd: `npm install ${names.join(' ')}@0.0.40-alpha.0 --save`,
+    cmd: `npm install ${names.join(' ')} --save`,
     targetPath: targetPath,
     logger: logger
   }).catch((er) => {

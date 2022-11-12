@@ -63,6 +63,7 @@ var listAction = function (val) { return __awaiter(void 0, void 0, void 0, funct
                 (0, lib_1.logger)(lib_1.LogType.Tip, lang_1["default"].WINKEY.DEV);
                 (0, lib_1.logger)(lib_1.LogType.Tip, lang_1["default"].WINKEY.BUILD);
                 (0, lib_1.logger)(lib_1.LogType.Tip, lang_1["default"].WINKEY.LISTSEEDS);
+                (0, lib_1.logger)(lib_1.LogType.Tip, lang_1["default"].WINKEY.UPDATESEEDS);
                 return [2 /*return*/];
         }
     });

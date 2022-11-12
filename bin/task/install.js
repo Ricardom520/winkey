@@ -64,14 +64,20 @@ var reset = function () { return __awaiter(void 0, void 0, void 0, function () {
     });
 }); };
 var installAction = function (names, cmder) { return __awaiter(void 0, void 0, void 0, function () {
-    var targetPath;
+    var targetPath, res;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 logProcess.start(lang_1["default"].INSTALL.START);
                 targetPath = CONFIG_PLUGIN_PATH;
                 if (cmder && cmder.args && cmder.args[0]) {
-                    targetPath = path.resolve(targetPath, cmder.args[0]);
+                    res = cmder.args;
+                    names = [];
+                    res.forEach(function (item) {
+                        if (!names.includes(item)) {
+                            names.push(item);
+                        }
+                    });
                 }
                 if (!!fs.existsSync(targetPath)) return [3 /*break*/, 3];
                 return [4 /*yield*/, (0, utils_1.mkdirSync)(targetPath)["catch"](function (er) {
@@ -86,7 +92,7 @@ var installAction = function (names, cmder) { return __awaiter(void 0, void 0, v
                 _a.sent();
                 _a.label = 3;
             case 3: return [4 /*yield*/, (0, winkey_os_1.runSpawn)({
-                    cmd: "npm install ".concat(names.join(' '), "@0.0.40-alpha.0 --save"),
+                    cmd: "npm install ".concat(names.join(' '), " --save"),
                     targetPath: targetPath,
                     logger: logger_1.logger
                 })["catch"](function (er) {

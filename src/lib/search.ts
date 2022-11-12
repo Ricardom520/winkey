@@ -21,8 +21,10 @@ async function searchWinkeyNpm(key: string) {
 }
 
 /** 返回Seed包 */
-export async function listSeed() {
-  let winkeySeeds = []
+export async function listSeed(obj?: {
+  map: boolean
+}) {
+  let winkeySeeds: any = []
 
   try {
     const res = await searchWinkeyNpm('winkey-init-project-')
@@ -31,7 +33,14 @@ export async function listSeed() {
     if (!res.length) {
       winkeySeeds = ['winkey-init-project-seed-react']
     } else {
-      winkeySeeds = res.map(item => item.name)
+      if (obj?.map) {
+        winkeySeeds = {}
+        res.forEach((item) => {
+          winkeySeeds[item.name] = item
+        })
+      } else {
+        winkeySeeds = res.map(item => item.name)
+      }
     }
 
     return winkeySeeds

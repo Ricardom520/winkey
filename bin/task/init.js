@@ -63,6 +63,10 @@ var initAction = function (_, cmder) { return __awaiter(void 0, void 0, void 0, 
                 if (cmder.args && cmder.args[0]) {
                     targetPath = path.resolve(cmder.args[0]);
                 }
+                if (!lib_1.fs.existsSync(targetPath)) {
+                    (0, logger_1.logger)(logger_1.LogType.Error, '所选目录不存在');
+                    return [2 /*return*/];
+                }
                 return [4 /*yield*/, (0, search_1.listSeed)()];
             case 1:
                 seeds = _b.sent();
@@ -134,7 +138,7 @@ var initAction = function (_, cmder) { return __awaiter(void 0, void 0, void 0, 
                 iSeed = seedItems.filter(function (item) { return item.choice === r.seed; })[0].name;
                 seedInfo = seedItems.filter(function (item) { return item.name === iSeed; })[0];
                 if (!!seedInfo.installed) return [3 /*break*/, 6];
-                logProcess.start(lang_1["default"].INIT.SEED_INSTALLED);
+                logProcess.start(lang_1["default"].INIT.SEED_INSTALLSTART);
                 logProcess.wait(lang_1["default"].INIT.SEED_INSTALLING);
                 return [4 /*yield*/, (0, install_1.installAction)([seedInfo.name])["catch"](function (er) {
                         logProcess.finsh(er, 1);

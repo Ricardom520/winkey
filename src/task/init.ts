@@ -11,7 +11,7 @@ import lang from '../lang'
 import { installAction } from './install'
 import { readFilePaths, copyFiles } from '../lib/utils'
 import { failSpinner, fs, infoSpinner, addSpinner, updateSpinner } from '../lib'
-import { logger } from '../lib/logger'
+import { logger, LogType } from '../lib/logger'
 
 const logProcess = new LogProcess()
 const localConfig = new LocalConfig()
@@ -23,6 +23,11 @@ export const initAction = async (_, cmder: ActionSturct) => {
 
   if (cmder.args && cmder.args[0]) {
     targetPath = path.resolve(cmder.args[0])
+  }
+
+  if (!fs.existsSync(targetPath)) {
+    logger(LogType.Error, '所选目录不存在')
+    return
   }
 
   const seeds = await listSeed()
@@ -102,7 +107,7 @@ export const initAction = async (_, cmder: ActionSturct) => {
   const seedInfo = seedItems.filter((item) => item.name === iSeed)[0]
   // 判断选中的 seed 是否已经安装
   if (!seedInfo.installed) {
-    logProcess.start(lang.INIT.SEED_INSTALLED)
+    logProcess.start(lang.INIT.SEED_INSTALLSTART)
     logProcess.wait(lang.INIT.SEED_INSTALLING)
 
     await installAction([seedInfo.name]).catch((er) => {

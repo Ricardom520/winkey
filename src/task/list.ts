@@ -26,4 +26,5 @@ export const listAction = async (val: listActionOptions) => {
   logger(LogType.Tip, lang.WINKEY.DEV)
   logger(LogType.Tip, lang.WINKEY.BUILD)
   logger(LogType.Tip, lang.WINKEY.LISTSEEDS)
+  logger(LogType.Tip, lang.WINKEY.UPDATESEEDS)
 }
