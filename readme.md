@@ -1,4 +1,4 @@
-# winkey-cli 
+# winkey-cli 一个vite的脚手架
 
 ## 轻量化脚手架，简单上手，便捷开发
 
@@ -26,6 +26,13 @@
 
 - winkey install (seeds包名称可带版本号)
   直接安装seed包
+
+### 包类型
+- vite-project 项目模板
+
+- vite-component 组件模板
+
+- vite-qiankun 微前端qiankun子应用模板
 
 ### winkey.config 配置
 ```
